@@ -2,7 +2,6 @@ const db = require("../models");
 const Coments = db.coments;
 const User = db.user;
 const Todo = db.todo;
-const todo_Coments = db.todo_coments;
 
 exports.addComment = async (req, res) => {
     try{
@@ -14,17 +13,10 @@ exports.addComment = async (req, res) => {
             //     posted_by: data.id,
             //     text: text
             // }
-            const comentData = Coments.build({ posted_by: data.id, text: text, username: username});
+            const comentData = Coments.build({ posted_by: data.id, todo_id: todo_id, text: text, username: username});
             // const comentData = await Coments.create(coment);
             const saveComent = await comentData.save()
-            if(saveComent) {
-                const todoComentData = todo_Coments.build({todo_id: todo_id, coment_id: saveComent.id});
-                console.log(todoComentData)
-                await todoComentData.save();
-                res.status(200).json(saveComent);
-            }
-            else
-                res.status(404).json(`anable to comment with ${data.id}`)
+            res.status(200).json(saveComent);
         }else{
             res.status(404).json(`user not found with username: ${username} and password: ${password}`)
         }

@@ -5,6 +5,9 @@ module.exports = (sequelize, Sequelize) => {
         posted_by: {
             type: Sequelize.INTEGER
         },
+        todo_id: {
+            type: Sequelize.INTEGER
+        },
         text: {
             type: Sequelize.STRING
         },
